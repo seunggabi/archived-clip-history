@@ -6,11 +6,26 @@ load = () => {
   }, window.$clipHistory.WATCH_INTERVAL_TIME * 1.5)
 };
 
-_renderX = (i) => {
-  const $x = $(window.$clipHistory.common.doms.button);
+_renderRemoveAll = () => {
+  const $e = $(window.$clipHistory.common.doms.button);
 
-  $x.text('x');
-  $x.click(() => {
+  $e.text('Remove All');
+  $e.click(() => {
+    if(confirm('it\'s okay?')) {
+      window.$clipHistory.history.removeAll();
+    }
+
+    setTimeout(_load, 1);
+  })
+
+  return $e;
+}
+
+_renderX = (i) => {
+  const $e = $(window.$clipHistory.common.doms.button);
+
+  $e.text('x');
+  $e.click(() => {
     if(confirm('it\'s okay?')) {
       window.$clipHistory.history.remove(i)
     }
@@ -18,19 +33,19 @@ _renderX = (i) => {
     setTimeout(_load, 1);
   })
 
-  return $x;
+  return $e;
 }
 
 _renderCopy = (i) => {
-  const $copy = $(window.$clipHistory.common.doms.button);
+  const $e = $(window.$clipHistory.common.doms.button);
 
-  $copy.text('copy');
-  $copy.click(() => {
+  $e.text('copy');
+  $e.click(() => {
     window.$clipHistory.history.load(i)
     setTimeout(_load, 1);
   })
 
-  return $copy;
+  return $e;
 }
 
 _load = () => {
@@ -39,6 +54,10 @@ _load = () => {
 
   const $parents = $("#body");
   $parents.html('');
+
+  const $removeAll = _renderRemoveAll(i);
+  $parents.append($removeAll);
+
   history.list().then((list) => {
     list.forEach((t, i) => {
       const $s = $(doms.span);

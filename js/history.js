@@ -55,6 +55,16 @@ window.$clipHistory.history = (function () {
     });
   }
 
+  function removeAll() {
+    copy(' ');
+
+    setStorage({
+      history: []
+    }).then(() => {
+      resolve(0);
+    });
+  }
+
   function remove(index) {
     return new Promise((resolve) => {
       getStorage().then((storage) => {
@@ -110,6 +120,7 @@ window.$clipHistory.history = (function () {
     list,
     push,
     remove,
+    removeAll,
     load
   };
 })();
