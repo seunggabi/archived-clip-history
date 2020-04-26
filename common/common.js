@@ -1,4 +1,6 @@
-window.$clipHistory = window.$clipHistory || {};
+window.$clipHistory = window.$clipHistory || {
+  WATCH_INTERVAL_TIME: 3000
+};
 
 window.$clipHistory.common = {};
 window.$clipHistory.common.data = {

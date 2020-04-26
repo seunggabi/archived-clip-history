@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const { history, logger } = window.$clipHistory;
+  const { history, logger, WATCH_INTERVAL_TIME } = window.$clipHistory;
 
   setInterval(() => {
     logger.logClipboardRead();
@@ -8,5 +8,5 @@
     history.list().then(t =>
       console.log(t)
     );
-  }, 1000);
+  }, WATCH_INTERVAL_TIME);
 })();
