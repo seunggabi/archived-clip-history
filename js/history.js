@@ -16,9 +16,13 @@ window.$clipHistory.history = (function () {
 
   function getStorage() {
     return new Promise((resolve) => {
-      chrome.storage[type].get(name, (storage) => {
-        resolve(storage[name] || {});
-      });
+      try {
+        chrome.storage[type].get(name, (storage) => {
+          resolve(storage[name] || {});
+        });
+      } catch(e) {
+        resolve();
+      }
     });
   }
 
@@ -35,25 +39,32 @@ window.$clipHistory.history = (function () {
   function push(list) {
     return new Promise((resolve) => {
       getStorage().then((storage) => {
-        let history = (storage.history || []).concat(list);
-        let uniqueHistory = [];
+        _.remove(list, i => i === '')
 
-        history.forEach(item => {
-          let index = uniqueHistory.findIndex((i) => {
-            return (i === item);
-          });
-
-          if (index > -1) {
-            uniqueHistory.splice(index, 1);
-          }
-
-          if (item) {
-            uniqueHistory.push(item);
-          }
-        });
+        let history = list.concat(storage.history || []);
+        let uniq = _.uniq(history);
 
         setStorage({
-          history: uniqueHistory
+          history: uniq
+        }).then(() => {
+          resolve(uniq.length);
+        });
+      });
+    });
+  }
+
+  function remove(index) {
+    return new Promise((resolve) => {
+      getStorage().then((storage) => {
+        let history = storage.history || [];
+        _.remove(history, i => history[index] === i);
+
+        if(index === 0) {
+          copy('')
+        }
+
+        setStorage({
+          history: history
         }).then(() => {
           resolve(history.length);
         });
@@ -61,30 +72,33 @@ window.$clipHistory.history = (function () {
     });
   }
 
-  function remove(item) {
+  function load(index) {
     return new Promise((resolve) => {
       getStorage().then((storage) => {
         let history = storage.history || [];
-        let targetIndex = history.findIndex((i) => {
-          return (i === item);
-        });
+        const target = history[index];
+        console.log(history, index, target);
 
-        if (targetIndex > -1) {
-          history.splice(targetIndex, 1);
-          setStorage({
-            history: history
-          }).then(() => {
-            resolve(history.length);
-          });
-        }
+        copy(target);
+
+        resolve(target)
       });
     });
+  }
+
+  function copy() {
+    const el = document.createElement('textarea');
+    el.value = target;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
   }
 
   function list() {
     return new Promise((resolve) => {
       getStorage().then((storage = {}) => {
-        let l = (storage.history || []).reverse();
+        let l = (storage.history || []);
         resolve(l);
       });
     });
@@ -93,6 +107,7 @@ window.$clipHistory.history = (function () {
   return {
     list,
     push,
-    remove
+    remove,
+    load
   };
 })();

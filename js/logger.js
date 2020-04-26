@@ -11,7 +11,6 @@ window.$clipHistory.logger = (function () {
         history.push([text]);
       });
     } catch (e) {
-      console.log(e);
     }
   }
 

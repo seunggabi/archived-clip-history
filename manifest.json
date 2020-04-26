@@ -11,8 +11,17 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": [
+        "*://*.google.com/*",
+        "*://*.naver.com/*",
+        "*://*.tistory.com/*",
+        "*://*.github.com/*",
+        "*://*.youtube.com/*",
+        "*://*.daum.net/*",
+        "*://*.coupang.com/*"
+      ],
       "js": [
+        "common/lodash.min.js",
         "js/history.js",
         "js/logger.js",
         "js/event.js",
@@ -25,7 +34,6 @@
     "clipboardRead",
     "clipboardWrite",
     "tabs",
-    "*://*/*",
     "activeTab",
     "storage"
   ]
