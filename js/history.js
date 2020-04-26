@@ -1,4 +1,6 @@
-window.$clipHistory = window.$clipHistory || {};
+window.$clipHistory = window.$clipHistory || {
+  WATCH_INTERVAL_TIME: 1000
+};
 
 window.$clipHistory.history = (function () {
   'use strict';
@@ -39,7 +41,7 @@ window.$clipHistory.history = (function () {
   function push(list) {
     return new Promise((resolve) => {
       getStorage().then((storage) => {
-        _.remove(list, i => i === '')
+        _.remove(list, i => i === ' ')
 
         let history = list.concat(storage.history || []);
         let uniq = _.uniq(history);
@@ -59,8 +61,9 @@ window.$clipHistory.history = (function () {
         let history = storage.history || [];
         _.remove(history, i => history[index] === i);
 
+        console.log(index);
         if(index === 0) {
-          copy('')
+          copy(' ')
         }
 
         setStorage({
@@ -77,7 +80,6 @@ window.$clipHistory.history = (function () {
       getStorage().then((storage) => {
         let history = storage.history || [];
         const target = history[index];
-        console.log(history, index, target);
 
         copy(target);
 
@@ -86,7 +88,7 @@ window.$clipHistory.history = (function () {
     });
   }
 
-  function copy() {
+  function copy(target) {
     const el = document.createElement('textarea');
     el.value = target;
     document.body.appendChild(el);

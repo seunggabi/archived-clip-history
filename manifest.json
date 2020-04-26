@@ -5,10 +5,6 @@
   "description": "당신의 소중한 복사 히스토리 보관해드립니다.\nSave your copy list, just for you",
   "version": "0.0.0",
 
-  "browser_action": {
-    "default_popup": "popup/index.html"
-  },
-
   "content_scripts": [
     {
       "matches": [
@@ -18,14 +14,14 @@
         "*://*.github.com/*",
         "*://*.youtube.com/*",
         "*://*.daum.net/*",
-        "*://*.coupang.com/*"
+        "*://*.coupang.com/*",
+        "*://*.smartboook.com/*"
       ],
       "js": [
         "common/lodash.min.js",
         "js/history.js",
         "js/logger.js",
-        "js/event.js",
-        "app.js"
+        "js/event.js"
       ]
     }
   ],
@@ -36,5 +32,15 @@
     "tabs",
     "activeTab",
     "storage"
-  ]
+  ],
+
+  "sidebar_action": {
+    "default_page": "popup/index.html",
+    "default_icon": {
+      "16": "images/test.png"
+    },
+
+    "default_title": "clip-history",
+    "use_navigation_bar": true
+  }
 }

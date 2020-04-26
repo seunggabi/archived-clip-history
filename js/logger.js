@@ -7,10 +7,13 @@ window.$clipHistory.logger = (function () {
 
   function logClipboardRead() {
     try {
-      navigator.clipboard.readText().then(text => {
+      window.document.hasFocus() && navigator.clipboard.readText().then(text => {
         history.push([text]);
-      });
-    } catch (e) {
+      }).catch(
+
+      );
+    } catch(e) {
+
     }
   }
 

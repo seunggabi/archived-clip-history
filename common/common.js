@@ -1,6 +1,4 @@
-window.$clipHistory = window.$clipHistory || {
-  WATCH_INTERVAL_TIME: 3000
-};
+window.$clipHistory = window.$clipHistory || {};
 
 window.$clipHistory.common = {};
 window.$clipHistory.common.data = {
@@ -76,7 +74,10 @@ window.$clipHistory.common.data = {
 window.$clipHistory.common.doms = {
   link_wrapper: '<div class="link-wrapper"></div>',
   a: '<a href="#" target="_blank" class="padding-left-3"></a>',
-  li: '<li>'
+  li: '<li>',
+  div: '<div>',
+  span: '<span>',
+  button: '<button href="#"></button>'
 };
 
 
