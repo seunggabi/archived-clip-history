@@ -3,7 +3,7 @@
 
   "name": "ClipHistory",
   "description": "당신의 소중한 복사 히스토리 보관해드립니다.\nSave your copy list, just for you",
-  "version": "0.0.0",
+  "version": "1.0.0",
 
   "icons": {
     "128": "images/icon.png"
