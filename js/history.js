@@ -19,7 +19,7 @@ window.$clipHistory.history = (function () {
   function getStorage() {
     return new Promise((resolve) => {
       try {
-        chrome.storage[type].get(name, (storage) => {
+        chrome.storage[type].get(name, (storage = {}) => {
           resolve(storage[name] || {});
         });
       } catch(e) {
@@ -40,7 +40,7 @@ window.$clipHistory.history = (function () {
 
   function push(list) {
     return new Promise((resolve) => {
-      getStorage().then((storage) => {
+      getStorage().then((storage = {}) => {
         _.remove(list, i => i === ' ')
 
         let history = list.concat(storage.history || []);
@@ -67,7 +67,7 @@ window.$clipHistory.history = (function () {
 
   function remove(index) {
     return new Promise((resolve) => {
-      getStorage().then((storage) => {
+      getStorage().then((storage = {}) => {
         let history = storage.history || [];
         _.remove(history, i => history[index] === i);
 
@@ -87,7 +87,7 @@ window.$clipHistory.history = (function () {
 
   function load(index) {
     return new Promise((resolve) => {
-      getStorage().then((storage) => {
+      getStorage().then((storage = {}) => {
         let history = storage.history || [];
         const target = history[index];
 

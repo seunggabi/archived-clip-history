@@ -38,13 +38,8 @@
     "storage"
   ],
 
-  "sidebar_action": {
-    "default_page": "popup/index.html",
-    "default_icon": {
-      "128": "images/icon.png"
-    },
-
-    "default_title": "clip-history",
-    "use_navigation_bar": true
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup/index.html"
   }
 }
