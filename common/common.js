@@ -79,7 +79,6 @@ window.$clipHistory.common.doms = {
 
 
 
-/* reference: https://www.w3schools.com/js/js_cookies.asp */
 window.$clipHistory.common.getCookie = (cname) => {
   const name = cname + "=";
   const decodedCookie = decodeURIComponent(document.cookie);
