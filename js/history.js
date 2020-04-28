@@ -73,7 +73,6 @@ window.$clipHistory.history = (function () {
         let history = storage.history || [];
         _.remove(history, i => history[index] === i);
 
-        console.log(index);
         if(index === 0) {
           copy(' ')
         }
