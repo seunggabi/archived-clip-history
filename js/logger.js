@@ -5,10 +5,12 @@ window.$clipHistory.logger = (function () {
 
   const { history } = window.$clipHistory;
 
-  function logClipboardRead() {
+  function logClipboardRead(fn) {
     try {
       window.document.hasFocus() && navigator.clipboard.readText().then(text => {
-        history.push([text]);
+        history.push([text]).then(() => {
+          fn && fn();
+        });
       }).catch(
 
       );

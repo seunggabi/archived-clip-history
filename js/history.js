@@ -1,5 +1,7 @@
 window.$clipHistory = window.$clipHistory || {
-  WATCH_INTERVAL_TIME: 1000
+  WATCH_INTERVAL_TIME: 1000,
+  REFRESH_INTERVAL_TIME: 30000,
+  interval: undefined
 };
 
 window.$clipHistory.history = (function () {
