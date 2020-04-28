@@ -77,6 +77,17 @@ _renderCopy = (i) => {
   return $e;
 }
 
+convertHyperLink = (value) => {
+  return value
+      .split(' ')
+      .map(t => {
+        if (/https?:/.test(t)) {
+          return `<a href=${t} target="_blank">${t}</a>&nbsp;`;
+        }
+        return `${t} `;
+      });
+}
+
 _load = () => {
   const { doms } = window.$clipHistory.common;
   const { history } = window.$clipHistory;
@@ -98,7 +109,7 @@ _load = () => {
   history.list().then((list) => {
     list.forEach((t, i) => {
       const $s = $(doms.span);
-      $s.text(t);
+      $s.html(convertHyperLink(t));
 
       const $x = _renderX(i);
       const $copy = _renderCopy(i);
