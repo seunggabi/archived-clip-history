@@ -9,10 +9,10 @@ window.$clipHistory.common.data = {
       //   name: "Chrome",
       //   url: "",
       // },
-      // {
-      //   name: "Whale",
-      //   url: "",
-      // },
+      {
+        name: "Whale",
+        url: "https://store.whale.naver.com/detail/nclmnfnglpbfhdnmdpkjpnnagbkdlhai",
+      },
       {
         name: "Toonation",
         url: "https://toon.at/donate/637225213338784448",
