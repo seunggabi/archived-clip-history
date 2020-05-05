@@ -38,6 +38,8 @@ window.$clipHistory.history = (function () {
       chrome.storage[type].set(obj, () => {
         resolve();
       });
+
+      resolve();
     });
   }
 
@@ -119,10 +121,16 @@ window.$clipHistory.history = (function () {
 
   function copyImage(target) {
     const { type, value } = JSON.parse(target);
-    const blob = new Blob([new Uint8Array(value).buffer],  { type })
-    const item = new ClipboardItem({ [blob.type] : blob });
 
-    navigator.clipboard.write([item]);
+    // FIXME: image/gif not working ...; only image/png ...;
+    let blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/gif' })
+    let item = new ClipboardItem({ [blob.type] : blob });
+
+    navigator.clipboard.write([item]).catch(() => {
+      blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/png' })
+      item = new ClipboardItem({ [blob.type] : blob });
+      navigator.clipboard.write([item]);
+    });
   }
 
   function list() {

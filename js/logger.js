@@ -8,7 +8,7 @@ window.$clipHistory.logger = (function () {
   function logClipboardRead(fn) {
     try {
       window.document.hasFocus() && navigator.clipboard.readText().then(text => {
-        if(text === "") {
+        if(text === '') {
           _readImage(fn);
         }
 
@@ -32,9 +32,8 @@ window.$clipHistory.logger = (function () {
               blob.arrayBuffer().then(buffer => {
                 buffer = Array.from(new Uint8Array(buffer))
 
-                // FIXME: image/gif not working ...; only image/png ...;
                 const o = {}
-                o.type = 'image/gif';
+                o.type = blob.type;
                 o.value = buffer;
 
                 isImage && history.push([JSON.stringify(o)]).then(() => {
