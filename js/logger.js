@@ -35,7 +35,6 @@ window.$clipHistory.logger = (function () {
                 const o = {}
                 o.type = blob.type;
                 o.value = buffer;
-
                 isImage && history.push([JSON.stringify(o)]).then(() => {
                   fn && fn();
                 });

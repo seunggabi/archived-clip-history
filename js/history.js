@@ -38,8 +38,6 @@ window.$clipHistory.history = (function () {
       chrome.storage[type].set(obj, () => {
         resolve();
       });
-
-      resolve();
     });
   }
 
@@ -123,11 +121,15 @@ window.$clipHistory.history = (function () {
     const { type, value } = JSON.parse(target);
 
     // FIXME: image/gif not working ...; only image/png ...;
-    let blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/gif' })
+    let blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/jpeg' })
     let item = new ClipboardItem({ [blob.type] : blob });
 
     navigator.clipboard.write([item]).catch(() => {
       blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/png' })
+      item = new ClipboardItem({ [blob.type] : blob });
+      navigator.clipboard.write([item]);
+    }).catch(() => {
+      blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/jpeg' })
       item = new ClipboardItem({ [blob.type] : blob });
       navigator.clipboard.write([item]);
     });
