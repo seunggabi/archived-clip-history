@@ -77,7 +77,11 @@ _renderCopy = (i) => {
   return $e;
 }
 
-convertHyperLink = (value) => {
+_convertHyperLink = (value) => {
+  if(value instanceof Object) {
+    return value;
+  }
+
   return value
       .split(' ')
       .map(t => {
@@ -86,6 +90,17 @@ convertHyperLink = (value) => {
         }
         return `${t} `;
       });
+}
+
+_drawImage = (data) => {
+  const { doms } = window.$clipHistory.common;
+  const $img = $(doms.img);
+
+  const buffer = JSON.parse(data).value;
+  const src = "data:image/png;base64," + btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
+  $img.prop('src',src);
+
+  return $img;
 }
 
 _load = () => {
@@ -103,13 +118,24 @@ _load = () => {
   const $refresh = _refresh();
   $tool.append($refresh);
   const $countDown = _countDown();
+  $tool.append(' (');
   $tool.append($countDown);
+  $tool.append(')');
   $parents.append($tool);
 
   history.list().then((list) => {
     list.forEach((t, i) => {
       const $s = $(doms.span);
-      $s.html(convertHyperLink(t));
+
+      try {
+        if(JSON.parse(t).type.match(/^image\/.*/g).length > 0) {
+          $s.html(_drawImage(t))
+        } else {
+          throw 'NOT IMAGE';
+        }
+      } catch (e) {
+        $s.html(_convertHyperLink(t));
+      }
 
       const $x = _renderX(i);
       const $copy = _renderCopy(i);
@@ -118,6 +144,7 @@ _load = () => {
       $d.addClass('box')
       $d.append($x);
       $d.append($copy);
+      $d.append(' ');
       $d.append($s);
 
       $parents.append($d);

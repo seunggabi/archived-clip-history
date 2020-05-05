@@ -34,6 +34,7 @@ window.$clipHistory.history = (function () {
     return new Promise((resolve) => {
       let obj = {};
       obj[name] = data;
+
       chrome.storage[type].set(obj, () => {
         resolve();
       });
@@ -43,10 +44,10 @@ window.$clipHistory.history = (function () {
   function push(list) {
     return new Promise((resolve) => {
       getStorage().then((storage = {}) => {
-        _.remove(list, i => i === ' ')
+        _.remove(list, i => i === ' ');
 
         let history = list.concat(storage.history || []);
-        let uniq = _.uniq(history);
+        let uniq = _.uniqBy(history, e => JSON.stringify(e));
 
         setStorage({
           history: uniq
@@ -58,12 +59,10 @@ window.$clipHistory.history = (function () {
   }
 
   function removeAll() {
-    copy(' ');
+    copyText(' ');
 
     setStorage({
       history: []
-    }).then(() => {
-      resolve(0);
     });
   }
 
@@ -74,11 +73,11 @@ window.$clipHistory.history = (function () {
         _.remove(history, i => history[index] === i);
 
         if(index === 0) {
-          copy(' ')
+          copyText(' ')
         }
 
         setStorage({
-          history: history
+          history
         }).then(() => {
           resolve(history.length);
         });
@@ -92,20 +91,38 @@ window.$clipHistory.history = (function () {
         let history = storage.history || [];
         const target = history[index];
 
-        copy(target);
+        try {
+          if(JSON.parse(target).type.match(/^image\/.*/g).length > 0) {
+            copyImage(target);
+            return;
+
+          } else {
+            throw 'NOT IMAGE';
+          }
+        } catch (e) {
+          copyText(target);
+        }
 
         resolve(target)
       });
     });
   }
 
-  function copy(target) {
+  function copyText(target) {
     const el = document.createElement('textarea');
     el.value = target;
     document.body.appendChild(el);
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
+  }
+
+  function copyImage(target) {
+    const { type, value } = JSON.parse(target);
+    const blob = new Blob([new Uint8Array(value).buffer],  { type })
+    const item = new ClipboardItem({ [blob.type] : blob });
+
+    navigator.clipboard.write([item]);
   }
 
   function list() {

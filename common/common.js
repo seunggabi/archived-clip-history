@@ -88,7 +88,8 @@ window.$clipHistory.common.doms = {
   li: '<li>',
   div: '<div>',
   span: '<span>',
-  button: '<button href="#"></button>'
+  button: '<button href="#"></button>',
+  img: '<img style="max-width: 400px">'
 };
 
 
@@ -154,6 +155,32 @@ window.$clipHistory.common.r = () => {
 
 function i() {
   window.$clipHistory.common.r()
+}
+
+window.$clipHistory.getMimeType = (arrayBuffer) => {
+  const header = arrayBuffer.slice(0, 4).map(t => (+t).toString(16)).join('');
+
+  let type = "";
+  switch (header) {
+    case "89504e47":
+      type = "image/png";
+      break;
+    case "47494638":
+      type = "image/gif";
+      break;
+    case "ffd8ffe0":
+    case "ffd8ffe1":
+    case "ffd8ffe2":
+    case "ffd8ffe3":
+    case "ffd8ffe8":
+      type = "image/jpeg";
+      break;
+    default:
+      type = "unknown";
+      break;
+  }
+
+  return type;
 }
 
 window.addEventListener("load", i);
