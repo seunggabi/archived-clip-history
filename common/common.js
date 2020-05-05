@@ -88,13 +88,14 @@ window.$clipHistory.common.doms = {
   li: '<li>',
   div: '<div>',
   span: '<span>',
-  button: '<button href="#"></button>'
+  button: '<button href="#"></button>',
+  img: '<img style="max-width: 400px">'
 };
 
 
 
 window.$clipHistory.common.getCookie = (cname) => {
-  const name = cname + "=";
+  const name = cname + '=';
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(';');
   for (let i = 0; i < ca.length; i++) {
@@ -106,7 +107,7 @@ window.$clipHistory.common.getCookie = (cname) => {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return '';
 };
 
 
@@ -116,7 +117,7 @@ window.$clipHistory.common.a = (link, $parents) => {
 
   link.urls && link.urls.forEach(url => {
     let $a = $(doms.a);
-    $a.prop("href", url.url);
+    $a.prop('href', url.url);
     $a.text(`(${url.name})`);
     $a.addClass(link.className);
 
@@ -126,7 +127,7 @@ window.$clipHistory.common.a = (link, $parents) => {
   if(link instanceof Array) {
     link.forEach(l => {
       let $a = $(doms.a);
-      $a.prop("href", l.url);
+      $a.prop('href', l.url);
       $a.text(`${l.name}`);
       $a.addClass(l.className);
 
@@ -140,7 +141,7 @@ window.$clipHistory.common.a = (link, $parents) => {
 window.$clipHistory.common.r = () => {
   const { a, data, doms } = window.$clipHistory.common;
 
-  a(data.review, $("#review"));
+  a(data.review, $('#review'));
 
   data.project.forEach(link => {
     let $wrapper = $(doms.li);
@@ -148,7 +149,7 @@ window.$clipHistory.common.r = () => {
 
     a(link, $wrapper);
 
-    $("#project").append($wrapper);
+    $('#project').append($wrapper);
   });
 };
 
@@ -156,4 +157,30 @@ function i() {
   window.$clipHistory.common.r()
 }
 
-window.addEventListener("load", i);
+window.$clipHistory.getMimeType = (arrayBuffer) => {
+  const header = arrayBuffer.slice(0, 4).map(t => (+t).toString(16)).join('');
+
+  let type = '';
+  switch (header) {
+    case '89504e47':
+      type = 'image/png';
+      break;
+    case '47494638':
+      type = 'image/gif';
+      break;
+    case 'ffd8ffe0':
+    case 'ffd8ffe1':
+    case 'ffd8ffe2':
+    case 'ffd8ffe3':
+    case 'ffd8ffe8':
+      type = 'image/jpeg';
+      break;
+    default:
+      type = 'unknown';
+      break;
+  }
+
+  return type;
+}
+
+window.addEventListener('load', i);
