@@ -5,7 +5,7 @@ load = () => {
 
   setInterval(() => {
     _load();
-  }, window.$clipHistory.REFRESH_INTERVAL_TIME)
+  }, window.$clipHistory.common.CONST.REFRESH_INTERVAL_TIME)
 };
 
 _renderRemoveAll = () => {
@@ -37,7 +37,10 @@ _refresh = () => {
 _countDown = () => {
   const $e = $(window.$clipHistory.common.doms.span);
   $e.prop('id', 'timer');
-  $e.text(window.$clipHistory.REFRESH_INTERVAL_TIME/window.$clipHistory.common.CONST.K);
+  $e.text(
+      window.$clipHistory.common.CONST.REFRESH_INTERVAL_TIME
+      /
+      window.$clipHistory.common.CONST.WATCH_INTERVAL_TIME);
   $e.addClass('red')
 
   clearInterval(window.$clipHistory.interval);
@@ -46,7 +49,7 @@ _countDown = () => {
     let time = +$timer.text()
 
     time > 0 && $timer.text(time-1);
-  }, window.$clipHistory.common.CONST.K)
+  }, window.$clipHistory.common.CONST.WATCH_INTERVAL_TIME)
 
   return $e;
 }
@@ -72,7 +75,9 @@ _renderCopy = (i) => {
   $e.text('copy');
   $e.click(() => {
     window.$clipHistory.history.load(i).then(() => {
-      window.$clipHistory.logger.logClipboardRead(_load);
+      setTimeout(() => {
+        window.$clipHistory.logger.logClipboardRead(_load);
+      }, window.$clipHistory.common.CONST.TIMEOUT);
     })
   })
 

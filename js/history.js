@@ -1,7 +1,4 @@
 window.$clipHistory = window.$clipHistory || {
-  WATCH_INTERVAL_TIME: 1000,
-  REFRESH_INTERVAL_TIME: 30000,
-  interval: undefined
 };
 
 window.$clipHistory.history = (function () {
@@ -92,8 +89,9 @@ window.$clipHistory.history = (function () {
         const target = history[index];
 
         try {
-          if(JSON.parse(target).type.match(/^image\/.*/g).length > 0) {
+          if(/^image\/.*/g.test(JSON.parse(target).type)) {
             copyImage(target);
+            resolve(target);
             return;
 
           } else {

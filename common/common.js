@@ -2,8 +2,10 @@ window.$clipHistory = window.$clipHistory || {};
 
 window.$clipHistory.common = {
   CONST: {
-    TIMEOUT: 300,
-    K: 1000,
+    TIMEOUT: 10,
+    WATCH_INTERVAL_TIME: 1000,
+    REFRESH_INTERVAL_TIME: 30000,
+    INTERVAL: undefined
   }
 };
 window.$clipHistory.common.data = {
