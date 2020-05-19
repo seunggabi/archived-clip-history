@@ -1,6 +1,13 @@
 window.$clipHistory = window.$clipHistory || {};
 
-window.$clipHistory.common = {};
+window.$clipHistory.common = {
+  CONST: {
+    TIMEOUT: 10,
+    WATCH_INTERVAL_TIME: 1000,
+    REFRESH_INTERVAL_TIME: 30000,
+    INTERVAL: undefined
+  }
+};
 window.$clipHistory.common.data = {
   review: {
     className: "red bold",
@@ -88,6 +95,7 @@ window.$clipHistory.common.doms = {
   li: '<li>',
   div: '<div>',
   span: '<span>',
+  pre: '<pre>',
   button: '<button href="#"></button>',
   img: '<img style="max-width: 400px">'
 };

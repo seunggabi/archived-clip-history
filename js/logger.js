@@ -1,8 +1,6 @@
 window.$clipHistory = window.$clipHistory || {};
 
 window.$clipHistory.logger = (function () {
-  'use strict';
-
   const { history } = window.$clipHistory;
 
   function logClipboardRead(fn) {
@@ -28,7 +26,7 @@ window.$clipHistory.logger = (function () {
         for (const clipboardItem of clipboardItems) {
           for (const type of clipboardItem.types) {
             clipboardItem.getType(type).then(blob => {
-              const isImage = blob.type.match(/^image\/.*/g).length > 0;
+              const isImage = /^image\/.*/g.test(blob.type);
               blob.arrayBuffer().then(buffer => {
                 buffer = Array.from(new Uint8Array(buffer))
 

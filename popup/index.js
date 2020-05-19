@@ -1,9 +1,11 @@
+
+
 load = () => {
   _load();
 
   setInterval(() => {
     _load();
-  }, window.$clipHistory.REFRESH_INTERVAL_TIME)
+  }, window.$clipHistory.common.CONST.REFRESH_INTERVAL_TIME)
 };
 
 _renderRemoveAll = () => {
@@ -15,7 +17,7 @@ _renderRemoveAll = () => {
       window.$clipHistory.history.removeAll();
     }
 
-    setTimeout(_load, 1);
+    setTimeout(_load, window.$clipHistory.common.CONST.TIMEOUT);
   })
 
   return $e;
@@ -26,7 +28,7 @@ _refresh = () => {
 
   $e.text('Force Refresh (auto refresh every 30s)');
   $e.click(() => {
-    setTimeout(_load, 1);
+    setTimeout(_load, window.$clipHistory.common.CONST.TIMEOUT);
   })
 
   return $e;
@@ -35,7 +37,10 @@ _refresh = () => {
 _countDown = () => {
   const $e = $(window.$clipHistory.common.doms.span);
   $e.prop('id', 'timer');
-  $e.text(window.$clipHistory.REFRESH_INTERVAL_TIME/1000);
+  $e.text(
+      window.$clipHistory.common.CONST.REFRESH_INTERVAL_TIME
+      /
+      window.$clipHistory.common.CONST.WATCH_INTERVAL_TIME);
   $e.addClass('red')
 
   clearInterval(window.$clipHistory.interval);
@@ -44,7 +49,7 @@ _countDown = () => {
     let time = +$timer.text()
 
     time > 0 && $timer.text(time-1);
-  }, 1000)
+  }, window.$clipHistory.common.CONST.WATCH_INTERVAL_TIME)
 
   return $e;
 }
@@ -58,7 +63,7 @@ _renderX = (i) => {
       window.$clipHistory.history.remove(i)
     }
 
-    setTimeout(_load, 1);
+    setTimeout(_load, window.$clipHistory.common.CONST.TIMEOUT);
   })
 
   return $e;
@@ -70,7 +75,9 @@ _renderCopy = (i) => {
   $e.text('copy');
   $e.click(() => {
     window.$clipHistory.history.load(i).then(() => {
-      window.$clipHistory.logger.logClipboardRead(_load);
+      setTimeout(() => {
+        window.$clipHistory.logger.logClipboardRead(_load);
+      }, window.$clipHistory.common.CONST.TIMEOUT);
     })
   })
 
@@ -125,16 +132,16 @@ _load = () => {
 
   history.list().then((list) => {
     list.forEach((t, i) => {
-      const $s = $(doms.span);
+      const $pre = $(doms.pre);
 
       try {
-        if(JSON.parse(t).type.match(/^image\/.*/g).length > 0) {
-          $s.html(_drawImage(t))
+        if(/^image\/.*/g.test(JSON.parse(t).type)) {
+          $pre.html(_drawImage(t))
         } else {
           throw 'NOT IMAGE';
         }
       } catch (e) {
-        $s.html(_convertHyperLink(t));
+        $pre.html(_convertHyperLink(t));
       }
 
       const $x = _renderX(i);
@@ -145,7 +152,7 @@ _load = () => {
       $d.append($x);
       $d.append($copy);
       $d.append(' ');
-      $d.append($s);
+      $d.append($pre);
 
       $parents.append($d);
     });

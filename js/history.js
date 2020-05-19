@@ -1,12 +1,7 @@
 window.$clipHistory = window.$clipHistory || {
-  WATCH_INTERVAL_TIME: 1000,
-  REFRESH_INTERVAL_TIME: 30000,
-  interval: undefined
 };
 
 window.$clipHistory.history = (function () {
-  'use strict';
-
   let name = getName();
   let type = getType();
 
@@ -92,8 +87,9 @@ window.$clipHistory.history = (function () {
         const target = history[index];
 
         try {
-          if(JSON.parse(target).type.match(/^image\/.*/g).length > 0) {
+          if(/^image\/.*/g.test(JSON.parse(target).type)) {
             copyImage(target);
+            resolve(target);
             return;
 
           } else {
@@ -118,7 +114,7 @@ window.$clipHistory.history = (function () {
   }
 
   function copyImage(target) {
-    const { type, value } = JSON.parse(target);
+    const { value } = JSON.parse(target);
 
     // FIXME: image/gif not working ...; only image/png ...;
     let blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/jpeg' })
