@@ -135,7 +135,7 @@ _load = () => {
       const $s = $(doms.span);
 
       try {
-        if(JSON.parse(t).type.match(/^image\/.*/g).length > 0) {
+        if(/^image\/.*/g.test(JSON.parse(t).type)) {
           $s.html(_drawImage(t))
         } else {
           throw 'NOT IMAGE';
