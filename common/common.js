@@ -95,6 +95,7 @@ window.$clipHistory.common.doms = {
   li: '<li>',
   div: '<div>',
   span: '<span>',
+  pre: '<pre>',
   button: '<button href="#"></button>',
   img: '<img style="max-width: 400px">'
 };

@@ -1,8 +1,6 @@
 window.$clipHistory = window.$clipHistory || {};
 
 window.$clipHistory.logger = (function () {
-  'use strict';
-
   const { history } = window.$clipHistory;
 
   function logClipboardRead(fn) {

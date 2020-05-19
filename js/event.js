@@ -1,8 +1,7 @@
 (function () {
-  'use strict';
   const { logger } = window.$clipHistory;
 
   setInterval(() => {
-    // logger.logClipboardRead();
+    logger.logClipboardRead();
   }, window.$clipHistory.common.CONST.WATCH_INTERVAL_TIME);
 })();

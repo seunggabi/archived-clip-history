@@ -2,8 +2,6 @@ window.$clipHistory = window.$clipHistory || {
 };
 
 window.$clipHistory.history = (function () {
-  'use strict';
-
   let name = getName();
   let type = getType();
 

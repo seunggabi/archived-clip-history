@@ -132,16 +132,16 @@ _load = () => {
 
   history.list().then((list) => {
     list.forEach((t, i) => {
-      const $s = $(doms.span);
+      const $pre = $(doms.pre);
 
       try {
         if(/^image\/.*/g.test(JSON.parse(t).type)) {
-          $s.html(_drawImage(t))
+          $pre.html(_drawImage(t))
         } else {
           throw 'NOT IMAGE';
         }
       } catch (e) {
-        $s.html(_convertHyperLink(t));
+        $pre.html(_convertHyperLink(t));
       }
 
       const $x = _renderX(i);
@@ -152,7 +152,7 @@ _load = () => {
       $d.append($x);
       $d.append($copy);
       $d.append(' ');
-      $d.append($s);
+      $d.append($pre);
 
       $parents.append($d);
     });
