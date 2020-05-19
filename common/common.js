@@ -1,6 +1,11 @@
 window.$clipHistory = window.$clipHistory || {};
 
-window.$clipHistory.common = {};
+window.$clipHistory.common = {
+  CONST: {
+    TIMEOUT: 300,
+    K: 1000,
+  }
+};
 window.$clipHistory.common.data = {
   review: {
     className: "red bold",

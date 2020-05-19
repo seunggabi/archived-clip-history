@@ -118,7 +118,7 @@ window.$clipHistory.history = (function () {
   }
 
   function copyImage(target) {
-    const { type, value } = JSON.parse(target);
+    const { value } = JSON.parse(target);
 
     // FIXME: image/gif not working ...; only image/png ...;
     let blob = new Blob([new Uint8Array(value).buffer],  { type: 'image/jpeg' })

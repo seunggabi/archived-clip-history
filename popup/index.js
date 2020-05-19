@@ -1,3 +1,5 @@
+
+
 load = () => {
   _load();
 
@@ -15,7 +17,7 @@ _renderRemoveAll = () => {
       window.$clipHistory.history.removeAll();
     }
 
-    setTimeout(_load, 1);
+    setTimeout(_load, window.$clipHistory.common.CONST.TIMEOUT);
   })
 
   return $e;
@@ -26,7 +28,7 @@ _refresh = () => {
 
   $e.text('Force Refresh (auto refresh every 30s)');
   $e.click(() => {
-    setTimeout(_load, 1);
+    setTimeout(_load, window.$clipHistory.common.CONST.TIMEOUT);
   })
 
   return $e;
@@ -35,7 +37,7 @@ _refresh = () => {
 _countDown = () => {
   const $e = $(window.$clipHistory.common.doms.span);
   $e.prop('id', 'timer');
-  $e.text(window.$clipHistory.REFRESH_INTERVAL_TIME/1000);
+  $e.text(window.$clipHistory.REFRESH_INTERVAL_TIME/window.$clipHistory.common.CONST.K);
   $e.addClass('red')
 
   clearInterval(window.$clipHistory.interval);
@@ -44,7 +46,7 @@ _countDown = () => {
     let time = +$timer.text()
 
     time > 0 && $timer.text(time-1);
-  }, 1000)
+  }, window.$clipHistory.common.CONST.K)
 
   return $e;
 }
@@ -58,7 +60,7 @@ _renderX = (i) => {
       window.$clipHistory.history.remove(i)
     }
 
-    setTimeout(_load, 1);
+    setTimeout(_load, window.$clipHistory.common.CONST.TIMEOUT);
   })
 
   return $e;
