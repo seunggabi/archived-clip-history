@@ -100,8 +100,6 @@ window.$clipHistory.common.doms = {
   img: '<img style="max-width: 400px">'
 };
 
-
-
 window.$clipHistory.common.getCookie = (cname) => {
   const name = cname + '=';
   const decodedCookie = decodeURIComponent(document.cookie);
@@ -117,8 +115,6 @@ window.$clipHistory.common.getCookie = (cname) => {
   }
   return '';
 };
-
-
 
 window.$clipHistory.common.a = (link, $parents) => {
   const { doms } = window.$clipHistory.common;
