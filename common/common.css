@@ -93,7 +93,7 @@ a:hover, a:focus {
 button {
     text-align: center;
     cursor: pointer;
-    transition: all 0.9s, color 0.3s;
+    transition: all 0.5s, color 0.5s;
     height: 25px;
 }
 
