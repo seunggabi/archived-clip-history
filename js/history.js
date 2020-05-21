@@ -1,5 +1,4 @@
-window.$clipHistory = window.$clipHistory || {
-};
+window.$clipHistory = window.$clipHistory || {};
 
 window.$clipHistory.history = (function () {
   let name = getName();

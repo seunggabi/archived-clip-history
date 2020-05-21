@@ -3,7 +3,7 @@
 
   "name": "ClipHistory",
   "description": "당신의 소중한 복사 히스토리를 보관해드립니다.\nMemorize your Copy History. (Just for you)",
-  "version": "1.3.0",
+  "version": "1.3.1",
 
   "icons": {
     "128": "images/icon.png"
@@ -22,7 +22,9 @@
         "*://*.smartboook.com/*"
       ],
       "js": [
+        "common/jquery.min.js",
         "common/lodash.min.js",
+        "common/common.js",
         "js/history.js",
         "js/logger.js",
         "js/event.js"
